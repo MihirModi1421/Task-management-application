@@ -20,11 +20,10 @@ mongoose.connect(mongoUri)
   .catch(err => console.error('Error connecting to MongoDB:', err));
 
 /*
-  uncomment below code to render index.ejs
+  uncomment below code to enable index.ejs
 */
-// View engine setup (EJS)
 // app.set('views', path.join(__dirname, 'views'));
-// app.set('view engine', 'ejs');
+// app.set('view engine', 'ejs');  // View engine setup (EJS)
 
 // Use body-parser middleware
 app.use(bodyParser.json());
@@ -63,10 +62,22 @@ app.use('/tasks', verifyJWT, tasksRouter);
 // Use the user router
 app.use('/user', userRouter);
 
+/*
+  Uncomment below code to render ejs
+*/
 // Handle any other routes (e.g., display the index page)
-app.get('/', (req, res) => {
-  res.render('index'); // Render the index view (modify to handle user data)
-});
+// app.get('/', (req, res) => {
+//   res.render('index'); // Render the index view (modify to handle user data)
+// });
+
+// Login and Register Routes
+// app.get('/login', (req, res) => {
+//   res.render('login');
+// });
+
+// app.get('/register', (req, res) => {
+//   res.render('register');
+// });
 
 // Error handling middleware (optional)
 app.use((err, req, res, next) => {

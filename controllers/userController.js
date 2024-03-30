@@ -7,6 +7,7 @@ exports.registerUser = async (req, res) => {
   try {
     const user = await userService.registerUser(email, password);
     res.status(201).json(user); // Send created user data as JSON
+    // res.render('login'); // Send created user data as JSON
   } catch (err) {
     console.error('Error registering user:', err);
     res.status(400).json({ message: err.message }); // Send error message as JSON with appropriate status code
