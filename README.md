@@ -10,7 +10,7 @@ Getting Started
     Clone the repository:
     Bash
 
-    git clone https://github.com/<your-username>/task-management-application.git
+    git clone git@github.com:MihirModi1421/Task-management-application.git
 
     
 
