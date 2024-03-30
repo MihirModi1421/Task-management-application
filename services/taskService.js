@@ -1,9 +1,15 @@
 const Task = require('../models/task');
+const Label = require('../models/label'); // Import the Label model
 
-const getAllTasks = async (userId) => {
-  const tasks = await Task.find({ userId })
-    .sort({ priority: 1, dueDate: 1 }); // Sort by priority and dueDate
-  return tasks;
+const getAllTasks = async (userId, labelId) => {
+  if (labelId) {
+    const tasks = await Task.find({ userId, labels: labelId })
+      .sort({ priority: 1, dueDate: 1 }); // Filter by label and sort
+    return tasks;
+  } else {
+    return await Task.find({ userId })
+      .sort({ priority: 1, dueDate: 1 }); // No label filter, sort as usual
+  }
 };
 
 const getTaskById = async (id, userId) => {
@@ -32,10 +38,36 @@ const deleteTask = async (id, userId) => {
   return deletedTask;
 };
 
+const addTaskLabel = async (taskId, labelId, userId) => {
+  const task = await Task.findOne({ _id: taskId, userId });
+  const label = await Label.findById(labelId); // Retrieve the label
+  if (!task || !label) {
+    return null; // Task or label not found
+  }
+  task.labels.push(label._id); // Add label reference to task
+  await task.save();
+  return task;
+};
+
+const removeTaskLabel = async (taskId, labelId, userId) => {
+  const task = await Task.findOne({ _id: taskId, userId });
+  if (!task) {
+    return null; // Task not found
+  }
+  const index = task.labels.indexOf(labelId);
+  if (index !== -1) {
+    task.labels.splice(index, 1); // Remove label reference
+    await task.save();
+  }
+  return task;
+};
+
 module.exports = {
   getAllTasks,
   getTaskById,
   createTask,
   updateTask,
   deleteTask,
+  addTaskLabel,
+  removeTaskLabel
 };

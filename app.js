@@ -9,6 +9,7 @@ const jwt = require('jsonwebtoken'); // For JWT verification
 
 const tasksRouter = require('./routes/tasks');
 const userRouter = require('./routes/users');
+const labelRouter = require('./routes/labels');
 
 const app = express();
 
@@ -58,6 +59,7 @@ const verifyJWT = (req, res, next) => {
 
 // Use the tasks router with JWT verification (adjust as needed)
 app.use('/tasks', verifyJWT, tasksRouter);
+app.use('/labels', verifyJWT, labelRouter); // Mount the router on the '/labels' path
 
 // Use the user router
 app.use('/user', userRouter);

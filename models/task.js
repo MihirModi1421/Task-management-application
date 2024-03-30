@@ -1,7 +1,8 @@
-const mongoose = require('mongoose');
+const mongoose = require('mongoose'); // Use destructuring for clarity
+const { Schema, Types } = mongoose; // Use destructuring for clarity
 const User = require('./user');
 
-const taskSchema = new mongoose.Schema({
+const taskSchema = new Schema({
   text: {
     type: String,
     required: true,
@@ -22,8 +23,11 @@ const taskSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  labels: {
+    type: [{ type: Types.ObjectId, ref: 'labels' }], // Array of Label ObjectIds
+  },
   userId: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: Types.ObjectId,
     required: true,
     ref: 'users', // Reference the User model
   },
