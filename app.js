@@ -19,6 +19,9 @@ mongoose.connect(mongoUri)
   .then(() => console.log('Connected to MongoDB'))
   .catch(err => console.error('Error connecting to MongoDB:', err));
 
+/*
+  uncomment below code to render index.ejs
+*/
 // View engine setup (EJS)
 // app.set('views', path.join(__dirname, 'views'));
 // app.set('view engine', 'ejs');

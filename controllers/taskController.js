@@ -3,7 +3,8 @@ const taskService = require('../services/taskService');
 exports.getTasks = async (req, res) => {
   try {
     const tasks = await taskService.getAllTasks(req.userId); // Filter tasks by the authenticated user's ID
-    res.render('index', { tasks }); // Pass tasks to the view
+    // res.render('index', { tasks }); // Pass tasks to the view
+    res.json({ tasks }); // Send tasks as JSON response
   } catch (err) {
     console.error('Error getting tasks:', err);
     res.status(500).send('Error getting tasks');
@@ -11,10 +12,11 @@ exports.getTasks = async (req, res) => {
 };
 
 exports.createTask = async (req, res) => {
-  const { text } = req.body;
+  const { text, priority, dueDate } = req.body; // Access additional fields from request body
   try {
-    const newTask = await taskService.createTask(text, req.userId); // Associate the task with the current user
-    res.redirect('/'); // Redirect to task list page
+    const newTask = await taskService.createTask(text, priority, dueDate, req.userId); // Pass additional fields to createTask
+    // res.redirect('/'); // Redirect to task list page
+    res.json(newTask); // Send newly created task as JSON response
   } catch (err) {
     console.error('Error creating task:', err);
     res.status(500).send('Error creating task');

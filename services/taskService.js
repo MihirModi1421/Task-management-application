@@ -1,23 +1,24 @@
 const Task = require('../models/task');
 
 const getAllTasks = async (userId) => {
-  const tasks = await Task.find({ userId }); // Filter by userId
+  const tasks = await Task.find({ userId })
+    .sort({ priority: 1, dueDate: 1 }); // Sort by priority and dueDate
   return tasks;
 };
 
 const getTaskById = async (id, userId) => {
-  const task = await Task.findOne({ _id: id, userId }); // Filter by id and userId
+  const task = await Task.findOne({ _id: id, userId });
   return task;
 };
 
-const createTask = async (text, userId) => {
-  const newTask = new Task({ text, userId });
+const createTask = async (text, priority, dueDate, userId) => {
+  const newTask = new Task({ text, priority, dueDate, userId });
   await newTask.save();
   return newTask;
 };
 
 const updateTask = async (id, updates, userId) => {
-  const allowedUpdates = ['text', 'completed'];
+  const allowedUpdates = ['text', 'priority', 'dueDate', 'completed', 'inProgress']; // Add new fields
   const isValidUpdate = updates.every(update => allowedUpdates.includes(update));
   if (!isValidUpdate) {
     throw new Error('Invalid updates!');
