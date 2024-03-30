@@ -43,10 +43,10 @@ Features
     Task Prioritization (high, medium, low) with due dates
     Task Completion Tracking (in progress, completed)
     Error Handling with appropriate HTTP status codes
+    Task Categorization with labels or tags
 
 Future Development
 
     EJS Templating Engine for dynamic rendering
-    Task Categorization with labels or tags
     Search and Filtering for tasks
     Intuitive Dashboard for managing tasks
