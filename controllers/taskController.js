@@ -2,8 +2,8 @@ const taskService = require('../services/taskService');
 
 exports.getTasks = async (req, res) => {
   try {
-    const tasks = await taskService.getAllTasks();
-    res.render('index', { tasks }); // Render the index view with tasks data
+    const tasks = await taskService.getAllTasks(req.userId); // Filter tasks by the authenticated user's ID
+    res.render('index', { tasks }); // Pass tasks to the view
   } catch (err) {
     console.error('Error getting tasks:', err);
     res.status(500).send('Error getting tasks');
@@ -13,8 +13,8 @@ exports.getTasks = async (req, res) => {
 exports.createTask = async (req, res) => {
   const { text } = req.body;
   try {
-    const newTask = await taskService.createTask(text);
-    res.redirect('/'); // Redirect back to the task list page
+    const newTask = await taskService.createTask(text, req.userId); // Associate the task with the current user
+    res.redirect('/'); // Redirect to task list page
   } catch (err) {
     console.error('Error creating task:', err);
     res.status(500).send('Error creating task');
@@ -25,11 +25,11 @@ exports.updateTask = async (req, res) => {
   const { id } = req.params;
   const updates = req.body;
   try {
-    const updatedTask = await taskService.updateTask(id, updates);
+    const updatedTask = await taskService.updateTask(id, updates, req.userId); // Check task ownership before updating
     if (!updatedTask) {
       return res.status(404).send('Task not found');
     }
-    res.json(updatedTask); // Assuming API response here (change to render if needed)
+    res.json(updatedTask); // Send updated task as JSON response
   } catch (err) {
     console.error('Error updating task:', err);
     res.status(500).send('Error updating task');
@@ -39,11 +39,11 @@ exports.updateTask = async (req, res) => {
 exports.deleteTask = async (req, res) => {
   const { id } = req.params;
   try {
-    const deletedTask = await taskService.deleteTask(id);
+    const deletedTask = await taskService.deleteTask(id, req.userId); // Check task ownership before deleting
     if (!deletedTask) {
       return res.status(404).send('Task not found');
     }
-    res.json(deletedTask); // Assuming API response here (change to render if needed)
+    res.json(deletedTask); // Send deleted task as JSON response
   } catch (err) {
     console.error('Error deleting task:', err);
     res.status(500).send('Error deleting task');
