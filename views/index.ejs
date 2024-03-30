@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Task Manager</title>
+</head>
+<body>
+  <h1>Task List</h1>
+  <% if (tasks && tasks.length > 0) { %>  <ul>
+      <% tasks.forEach(task => { %>
+        <li>
+          <input type="checkbox" id="<%= task._id %>" <%= task.completed ? 'checked' : '' %> onclick="toggleTask('<%= task._id %>')">
+          <label for="<%= task._id %>"><%= task.text %></label>
+          <a href="/edit-task/<%= task._id %>">Edit</a>  <button onclick="deleteTask('<%= task._id %>')">Delete</button>
+        </li>
+      <% }) %>
+    </ul>
+  <% } else { %>  <p>No tasks found!</p>
+  <% } %>
+  <form action="/add-task" method="POST">
+    <label for="newTask">New Task:</label>
+    <input type="text" id="newTask" name="text">
+    <button type="submit">Add Task</button>
+  </form>
+
+  <script>
+    async function toggleTask(id) {
+      const response = await fetch(`/tasks/${id}/completed`, { // Send AJAX request
+        method: 'PUT',
+        body: JSON.stringify({ completed: !document.getElementById(id).checked }), // Toggle completed status
+        headers: { 'Content-Type': 'application/json' }
+      });
+      if (!response.ok) {
+        console.error('Error updating task:', await response.text());
+        return;
+      }
+      // Update UI based on response (optional)
+    }
+
+    async function deleteTask(id) {
+      const response = await fetch(`/tasks/${id}`, { // Send AJAX request
+        method: 'DELETE'
+      });
+      if (!response.ok) {
+        console.error('Error deleting task:', await response.text());
+        return;
+      }
+      // Remove task from UI (optional)
+      window.location.reload(); // Reload page for simplicity (improve later with UI updates)
+    }
+  </script>
+</body>
+</html>
