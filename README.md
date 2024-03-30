@@ -8,35 +8,34 @@ Getting Started
 1. Installation
 
     Clone the repository:
-    ```js
     Bash
 
     git clone https://github.com/<your-username>/task-management-application.git
-```
+
+    
 
 Install dependencies:
-```js
 Bash
 
 npm install
-```
+
+
 
 2. Running the Application
 
     Development mode (hot reloading):
-    ```js
     Bash
 
     npm run start:dev
-```
 
+    
 
 Production mode:
-```js
 Bash
 
 npm run start
-```
+
+
 
 Features
 
