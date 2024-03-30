@@ -19,9 +19,9 @@ Bash
 
 npm install
 
+2. Copy .env.example as .env 
 
-
-2. Running the Application
+3. Running the Application
 
     Development mode (hot reloading):
     Bash
