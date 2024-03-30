@@ -40,13 +40,13 @@ npm run start
 Features
 
     User Registration with email and password using JWT authentication
-    Intuitive Dashboard for managing tasks
     Task Prioritization (high, medium, low) with due dates
     Task Completion Tracking (in progress, completed)
     Error Handling with appropriate HTTP status codes
-    EJS Templating Engine for dynamic rendering
 
 Future Development
 
+    EJS Templating Engine for dynamic rendering
     Task Categorization with labels or tags
     Search and Filtering for tasks
+    Intuitive Dashboard for managing tasks
